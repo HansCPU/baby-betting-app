@@ -5,10 +5,11 @@ const firebaseConfig = {
   apiKey: "AIzaSyAe9vP5Mn1b9wLpk-fnG9RL9mxKEgRyvE4",
   authDomain: "babybetting-10677.firebaseapp.com",
   projectId: "babybetting-10677",
-  storageBucket: "babybetting-10677.firebasestorage.app",
+  storageBucket: "babybetting-10677.appspot.com",
   messagingSenderId: "668728354912",
   appId: "1:668728354912:web:51ec22e3abbd470d427b05",
 };
+
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
@@ -33,6 +34,23 @@ window.onclick = function(event) {
     confirmationModal.style.display = 'none';
   }
 };
+
+// Håndter tilpasset filopplasting
+const fileInput = document.getElementById('selfie');
+const button = fileInput.nextElementSibling;
+const label = button.nextElementSibling;
+
+button.addEventListener('click', () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', () => {
+  let fileName = 'Ingen fil valgt';
+  if (fileInput.files.length > 0) {
+    fileName = fileInput.files[0].name;
+  }
+  label.textContent = fileName;
+});
 
 // Send inn veddemål
 betForm.addEventListener('submit', (e) => {
@@ -79,6 +97,7 @@ betForm.addEventListener('submit', (e) => {
 
       // Nullstill skjema
       betForm.reset();
+      label.textContent = 'Ingen fil valgt';
 
       // Vis bekreftelsesmodal
       if (selfieURL) {

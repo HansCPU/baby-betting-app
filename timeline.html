@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
   <meta charset="UTF-8">
   <title>Veddemål tidslinje</title>
@@ -15,162 +15,44 @@
 
   <!-- Inkluder Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Din egen script -->
   <script src="timeline.js" defer></script>
 
   <!-- Dine stiler -->
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #fffaf0;
-      color: #333;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 {
-      font-family: 'Pacifico', cursive;
-      color: #ff7f50;
-      text-align: center;
-    }
-    .dashboard-section {
-      margin: 20px auto;
-      max-width: 800px;
-    }
-    .total-counter {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      margin-bottom: 20px;
-    }
-    .counter-box {
-      background-color: #ff6347;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 45%;
-      text-align: center;
-      font-size: 2em;
-      position: relative;
-      margin-bottom: 20px;
-    }
-    .counter-label {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #fffaf0;
-      color: #ff6347;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 0.8em;
-      font-weight: bold;
-    }
-    #timeline {
-      height: 500px;
-      border: 1px solid #ccc;
-      margin-top: 20px;
-    }
-    /* Tidslinjestiler */
-    #timeline .vis-item.guess img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
-    #timeline .vis-item.guess div {
-      display: inline-block;
-      vertical-align: middle;
-    }
-    #timeline .vis-item.due-date {
-      background-color: #1e90ff; /* Termindato i blått */
-      color: white;
-      border-radius: 4px;
-    }
-    .parents-photo {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .parents-photo img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-    .link {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .link a {
-      color: #ff6347;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    @media (max-width: 600px) {
-      .counter-box {
-        width: 100%;
-      }
-    }
-    /* Modal stiler */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fffaf0;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 400px;
-      text-align: center;
-    }
-    .close {
-      color: #ff6347;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .modal-content img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-bottom: 15px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Ikoner fra Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <h1>Veddemål tidslinje</h1>
+  <header>
+    <h1>Veddemål tidslinje</h1>
+  </header>
 
-  <div class="dashboard-section">
-    <div class="total-counter">
-      <div class="counter-box" id="baby-savings">
-        <div class="counter-label">Baby sparepott</div>
-        <span id="baby-savings-amount">0</span> NOK
+  <main>
+    <div class="dashboard-section">
+      <div class="total-counter">
+        <div class="counter-box" id="baby-savings">
+          <div class="counter-label">Baby sparepott</div>
+          <span id="baby-savings-amount">0</span> NOK
+        </div>
+        <div class="counter-box" id="betting-pot">
+          <div class="counter-label">Veddemål pott</div>
+          <span id="betting-pot-amount">0</span> NOK
+        </div>
       </div>
-      <div class="counter-box" id="betting-pot">
-        <div class="counter-label">Veddemål pott</div>
-        <span id="betting-pot-amount">0</span> NOK
+
+      <!-- Foreldrenes bilde -->
+      <div class="parents-photo">
+        <img src="parents.jpg" alt="Vordende foreldre" />
       </div>
-    </div>
 
-    <!-- Foreldrenes bilde -->
-    <div class="parents-photo">
-      <img src="parents.jpg" alt="Vordende foreldre" />
+      <div id="timeline"></div>
     </div>
-
-    <div id="timeline"></div>
-  </div>
+  </main>
 
   <!-- Modal for å vise veddemålsdetaljer -->
   <div id="betModal" class="modal">
@@ -182,10 +64,11 @@
     </div>
   </div>
 
-  <!-- Link tilbake til veddemålsskjema -->
-  <div class="link">
-    <a href="index.html">Legg inn veddemål</a>
-  </div>
+  <!-- Sticky bunnnavigasjon -->
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fas fa-home"></i><span>Hjem</span></a>
+    <a href="timeline.html" class="active"><i class="fas fa-stream"></i><span>Tidslinje</span></a>
+  </nav>
 
 </body>
 </html>

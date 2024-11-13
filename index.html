@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
   <meta charset="UTF-8">
   <title>Legg inn ditt veddemål</title>
@@ -11,142 +11,53 @@
 
   <!-- Inkluder Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Din egen script -->
   <script src="app.js" defer></script>
 
   <!-- Dine stiler -->
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #fffaf0;
-      color: #333;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 {
-      font-family: 'Pacifico', cursive;
-      color: #ff7f50;
-      text-align: center;
-    }
-    .form-section {
-      margin: 20px auto;
-      max-width: 600px;
-    }
-    label {
-      font-weight: bold;
-    }
-    input[type="text"], input[type="date"], input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0 16px;
-      box-sizing: border-box;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      background-color: #ff6347;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      text-align: center;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 4px;
-      width: 100%;
-    }
-    button:hover {
-      background-color: #ff4500;
-    }
-    .link {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .link a {
-      color: #ff6347;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    /* Lasteanimasjon */
-    .spinner {
-      display: none;
-      margin: 20px auto;
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #ff6347;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    /* Bekreftelsesmodal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fffaf0;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 400px;
-      text-align: center;
-    }
-    .close {
-      color: #ff6347;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .modal-content img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-bottom: 15px;
-    }
-    .vipps-message {
-      font-size: 1.2em;
-      color: #ff6347;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Ikoner fra Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <h1>Legg inn ditt veddemål</h1>
+  <header>
+    <h1>Legg inn ditt veddemål</h1>
+  </header>
 
-  <div class="form-section">
-    <form id="bet-form">
-      <label for="name">Navn:</label>
-      <input type="text" id="name" required>
+  <main>
+    <div class="form-section">
+      <form id="bet-form">
+        <div class="form-group">
+          <label for="name">Navn:</label>
+          <input type="text" id="name" required>
+        </div>
 
-      <label for="date">Dato:</label>
-      <input type="date" id="date" required min="2024-10-22" max="2025-02-22">
+        <div class="form-group">
+          <label for="date">Dato:</label>
+          <input type="date" id="date" required min="2024-10-22" max="2025-02-22">
+        </div>
 
-      <!-- Valgfri bildeopplasting -->
-      <label for="selfie">Ta en selfie (valgfritt):</label>
-      <input type="file" id="selfie" accept="image/*" capture="user">
+        <!-- Valgfri bildeopplasting -->
+        <div class="form-group">
+          <label for="selfie">Ta en selfie (valgfritt):</label>
+          <div class="file-input">
+            <input type="file" id="selfie" accept="image/*" capture="user">
+            <span class="button"><i class="fas fa-camera"></i> Velg bilde</span>
+            <span class="label" data-js-label>Ingen fil valgt</span>
+          </div>
+        </div>
 
-      <button type="submit">Send inn veddemål</button>
-    </form>
+        <button type="submit">Send inn veddemål</button>
+      </form>
 
-    <!-- Lasteanimasjon -->
-    <div class="spinner" id="loading-spinner"></div>
-  </div>
+      <!-- Lasteanimasjon -->
+      <div class="spinner" id="loading-spinner"></div>
+    </div>
+  </main>
 
   <!-- Bekreftelsesmodal -->
   <div id="confirmationModal" class="modal">
@@ -160,10 +71,11 @@
     </div>
   </div>
 
-  <!-- Link til tidslinjen -->
-  <div class="link">
-    <a href="timeline.html">Se tidslinje</a>
-  </div>
+  <!-- Sticky bunnnavigasjon -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="active"><i class="fas fa-home"></i><span>Hjem</span></a>
+    <a href="timeline.html"><i class="fas fa-stream"></i><span>Tidslinje</span></a>
+  </nav>
 
 </body>
 </html>

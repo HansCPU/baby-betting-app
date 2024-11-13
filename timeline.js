@@ -33,6 +33,9 @@ const options = {
   },
   min: new Date('2024-10-22'),
   max: new Date('2025-02-22'),
+  zoomKey: 'ctrlKey', // Krever ctrl-tast for zoom på desktop
+  horizontalScroll: true,
+  zoomable: false, // Deaktiver zoom på mobil
 };
 
 // Initialiser tellere
@@ -72,7 +75,7 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
     totalContributions += 150; // Hvert veddemål er 150 NOK
 
     // Forbered data for tidslinjen
-    let content = `<div>${bet.name}</div>`;
+    let content = `<div class="text">${bet.name}</div>`;
     if (bet.selfieURL) {
       content = `<img src="${bet.selfieURL}" alt="${bet.name}">${content}`;
     }
@@ -93,8 +96,8 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
   const babySavings = totalContributions / 2;
   const bettingPot = totalContributions / 2;
 
-  animateValue(babySavingsAmount, parseInt(babySavingsAmount.textContent), babySavings, 1000);
-  animateValue(bettingPotAmount, parseInt(bettingPotAmount.textContent), bettingPot, 1000);
+  animateValue(babySavingsAmount, parseInt(babySavingsAmount.textContent) || 0, babySavings, 1000);
+  animateValue(bettingPotAmount, parseInt(bettingPotAmount.textContent) || 0, bettingPot, 1000);
 
   // Oppdater tidslinjen
   items.clear();
@@ -108,7 +111,7 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
     const modalName = document.getElementById('modal-name');
     const modalDate = document.getElementById('modal-date');
     const modalImage = document.getElementById('modal-image');
-    const closeBtn = document.getElementsByClassName('close')[0];
+    const closeBtn = modal.querySelector('.close');
 
     // Legg til hendelseslytter for klikk på elementer
     timeline.on('select', function (properties) {
