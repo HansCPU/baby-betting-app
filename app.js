@@ -5,7 +5,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAe9vP5Mn1b9wLpk-fnG9RL9mxKEgRyvE4",
   authDomain: "babybetting-10677.firebaseapp.com",
   projectId: "babybetting-10677",
-  storageBucket: "babybetting-10677.appspot.com",
+  storageBucket: "babybetting-10677.firebasestorage.app",
   messagingSenderId: "668728354912",
   appId: "1:668728354912:web:51ec22e3abbd470d427b05",
 };
