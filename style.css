@@ -10,6 +10,7 @@ body {
 }
 
 .intro-text {
+  justify-content: center;
   background-color: #fff;
   padding: 1rem;
   margin-bottom: 1rem;
