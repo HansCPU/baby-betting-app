@@ -86,7 +86,15 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
   snapshot.forEach(doc => {
     const bet = doc.data();
     totalContributions += 200; // Hvert veddemål er 150 NOK
-    const betDateTime = `${bet.date}T${bet.time}`;
+   // Check if bet.time is defined and construct a valid datetime string
+const betDateTime = bet.time ? `${bet.date}T${bet.time}` : `${bet.date}`;
+const betDate = new Date(betDateTime);
+
+// Log an error if betDate is invalid for debugging
+if (isNaN(betDate.getTime())) {
+  console.warn('Invalid date format detected:', betDateTime);
+}
+
     const betDate = new Date(betDateTime);
     
 
