@@ -85,18 +85,16 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
 
   snapshot.forEach(doc => {
     const bet = doc.data();
-    totalContributions += 200; // Hvert veddemål er 150 NOK
-   // Check if bet.time is defined and construct a valid datetime string
-const betDateTime = bet.time ? `${bet.date}T${bet.time}` : `${bet.date}`;
-const betDate = new Date(betDateTime);
+    totalContributions += 200; // Hvert veddemål er 200 NOK
 
-// Log an error if betDate is invalid for debugging
-if (isNaN(betDate.getTime())) {
-  console.warn('Invalid date format detected:', betDateTime);
-}
-
+    // Check if bet.time is defined and construct a valid datetime string
+    const betDateTime = bet.time ? `${bet.date}T${bet.time}` : `${bet.date}`;
     const betDate = new Date(betDateTime);
-    
+
+    // Log a warning if betDate is invalid for debugging
+    if (isNaN(betDate.getTime())) {
+      console.warn('Invalid date format detected:', betDateTime);
+    }
 
     // Forbered data for tidslinjen
     let content = `<div class="text">${bet.name}</div>`;
@@ -126,7 +124,6 @@ if (isNaN(betDate.getTime())) {
   animateValue(dateBettingPotAmount, parseInt(dateBettingPotAmount.textContent) || 0, dateBettingPot, 1000);
   animateValue(timeBettingPotAmount, parseInt(timeBettingPotAmount.textContent) || 0, timeBettingPot, 1000);
 
-
   // Oppdater tidslinjen
   items.clear();
   items.add(betsData);
@@ -149,7 +146,7 @@ if (isNaN(betDate.getTime())) {
           // Sett innhold i modal
           modalName.textContent = `${item.name} satser 200kr på at bebbi kommer ut av Nora den ${formatDate(item.betDate)} klokka ${item.betTime}`;
 
-          modalDate.textContent =  `Valgt dato og tid: ${formatDate(item.betDate)} kl. ${item.betTime}`;
+          modalDate.textContent = `Valgt dato og tid: ${formatDate(item.betDate)} kl. ${item.betTime}`;
           if (item.selfieURL) {
             modalImage.src = item.selfieURL;
             modalImage.style.display = 'block';
