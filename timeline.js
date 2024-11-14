@@ -166,9 +166,10 @@ function findClosestGuess(betsData, currentDate) {
   let minDateDifference = Infinity;
   let minTimeDifference = Infinity;
 
+  const currentMinutesOfDay = currentDate.getHours() * 60 + currentDate.getMinutes();
+
   betsData.forEach(bet => {
     const betDate = new Date(`${bet.betDate}T00:00:00`);
-    const betTime = bet.betTime ? new Date(`${bet.betDate}T${bet.betTime}`) : null;
 
     // Sjekk nærmeste dato
     const dateDiff = Math.abs(betDate - currentDate);
@@ -177,9 +178,12 @@ function findClosestGuess(betsData, currentDate) {
       closestDateGuess = bet;
     }
 
-    // Sjekk nærmeste tid hvis det finnes
-    if (betTime) {
-      const timeDiff = Math.abs(betTime - currentDate);
+    // Sjekk nærmeste klokkeslett uavhengig av dato
+    if (bet.betTime) {
+      const [betHours, betMinutes] = bet.betTime.split(':').map(Number);
+      const betMinutesOfDay = betHours * 60 + betMinutes;
+      const timeDiff = Math.abs(betMinutesOfDay - currentMinutesOfDay);
+
       if (timeDiff < minTimeDifference) {
         minTimeDifference = timeDiff;
         closestTimeGuess = bet;
@@ -189,6 +193,7 @@ function findClosestGuess(betsData, currentDate) {
 
   return { closestDateGuess, closestTimeGuess };
 }
+
 
 // Oppdater sanntidslytter
 db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
