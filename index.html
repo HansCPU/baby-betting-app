@@ -29,6 +29,11 @@
   </header>
 
   <main>
+    <div class="intro-text">
+      <p>Velkommen til babybetting! Her kan du satse på når 👼 bestemmer seg for å komme ut av Nora. Legg inn ditt bet med dato og klokkeslett!</p>
+      <p>Innsatsbeløpet er 200kr, hvor 100kr går til en sparekonto til 👼, 75kr til dato-potten og 25kr til klokkeslett-potten.</p>
+      <p>Her er det alltså tre vinnere; en heldig baby og to voksne!🥸 Lykke til!</p>
+    </div>
     <div class="form-section">
       <form id="bet-form">
         <div class="form-group">
@@ -40,6 +45,13 @@
           <label for="date">Dato:</label>
           <input type="date" id="date" required min="2024-10-22" max="2025-02-22">
         </div>
+
+        <!-- Legg til etter dato-feltet -->
+        <div class="form-group">
+          <label for="time">Klokkeslett:</label>
+          <input type="time" id="time" required>
+        </div>
+
 
         <!-- Valgfri bildeopplasting -->
         <div class="form-group">
@@ -57,6 +69,10 @@
       <!-- Lasteanimasjon -->
       <div class="spinner" id="loading-spinner"></div>
     </div>
+    <div class="navigation-buttons">
+      <a href="index.html" class="nav-button active"><i class="fas fa-home"></i> Hjem</a>
+      <a href="timeline.html" class="nav-button"><i class="fas fa-stream"></i> Tidslinje</a>
+    </div>
   </main>
 
   <!-- Bekreftelsesmodal -->
@@ -64,18 +80,13 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Veddemål registrert!</h2>
-      <p>Beløp: 150 NOK</p>
-      <p id="modal-date"></p>
+      <p id="modal-message"></p>
       <img id="modal-image" src="" alt="">
-      <p class="vipps-message">Send 150 kr til 94869369 på Vipps</p>
+      <p class="vipps-message">Vipps Hans Jacob 200kr - 94869369</p>
     </div>
   </div>
 
-  <!-- Sticky bunnnavigasjon -->
-  <nav class="bottom-nav">
-    <a href="index.html" class="active"><i class="fas fa-home"></i><span>Hjem</span></a>
-    <a href="timeline.html"><i class="fas fa-stream"></i><span>Tidslinje</span></a>
-  </nav>
+  
 
 </body>
 </html>

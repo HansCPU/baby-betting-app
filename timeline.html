@@ -39,11 +39,16 @@
           <div class="counter-label">Baby sparepott</div>
           <span id="baby-savings-amount">0</span> NOK
         </div>
-        <div class="counter-box" id="betting-pot">
-          <div class="counter-label">Veddemål pott</div>
-          <span id="betting-pot-amount">0</span> NOK
+        <div class="counter-box" id="date-betting-pot">
+          <div class="counter-label">Dato bet pott</div>
+          <span id="date-betting-pot-amount">0</span> NOK
+        </div>
+        <div class="counter-box" id="time-betting-pot">
+          <div class="counter-label">Tidspunkt bet pott</div>
+          <span id="time-betting-pot-amount">0</span> NOK
         </div>
       </div>
+
 
       <!-- Foreldrenes bilde -->
       <div class="parents-photo">
@@ -51,6 +56,10 @@
       </div>
 
       <div id="timeline"></div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="index.html" class="nav-button"><i class="fas fa-home"></i> Hjem</a>
+      <a href="timeline.html" class="nav-button active"><i class="fas fa-stream"></i> Tidslinje</a>
     </div>
   </main>
 
@@ -60,15 +69,13 @@
       <span class="close">&times;</span>
       <h2 id="modal-name"></h2>
       <p id="modal-date"></p>
+      <p id="modal-time"></p>
       <img id="modal-image" src="" alt="">
     </div>
   </div>
 
-  <!-- Sticky bunnnavigasjon -->
-  <nav class="bottom-nav">
-    <a href="index.html"><i class="fas fa-home"></i><span>Hjem</span></a>
-    <a href="timeline.html" class="active"><i class="fas fa-stream"></i><span>Tidslinje</span></a>
-  </nav>
+  
+  
 
 </body>
 </html>

@@ -17,6 +17,8 @@ const db = firebase.firestore();
 const babySavingsAmount = document.getElementById('baby-savings-amount');
 const bettingPotAmount = document.getElementById('betting-pot-amount');
 const container = document.getElementById('timeline');
+const dateBettingPotAmount = document.getElementById('date-betting-pot-amount');
+const timeBettingPotAmount = document.getElementById('time-betting-pot-amount');
 
 // Initialiser tidslinjen
 let timeline;
@@ -37,6 +39,17 @@ const options = {
   horizontalScroll: true,
   zoomable: false, // Deaktiver zoom på mobil
 };
+
+function formatDate(dateString) {
+  const months = ['januar', 'februar', 'mars', 'april', 'mai', 'juni',
+                  'juli', 'august', 'september', 'oktober', 'november', 'desember'];
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}. ${month} ${year}`;
+}
+
 
 // Initialiser tellere
 let totalContributions = 0;
@@ -72,7 +85,10 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
 
   snapshot.forEach(doc => {
     const bet = doc.data();
-    totalContributions += 150; // Hvert veddemål er 150 NOK
+    totalContributions += 200; // Hvert veddemål er 150 NOK
+    const betDateTime = `${bet.date}T${bet.time}`;
+    const betDate = new Date(betDateTime);
+    
 
     // Forbered data for tidslinjen
     let content = `<div class="text">${bet.name}</div>`;
@@ -83,21 +99,25 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
     betsData.push({
       id: doc.id,
       content: content,
-      start: bet.date,
+      start: betDateTime,
       type: 'box',
       className: 'guess',
       selfieURL: bet.selfieURL,
       betDate: bet.date,
+      betTime: bet.time,
       name: bet.name,
     });
   });
 
   // Oppdater tellerne med animasjon
-  const babySavings = totalContributions / 2;
-  const bettingPot = totalContributions / 2;
+  const babySavings = totalContributions / 2; // 100 NOK per veddemål
+  const dateBettingPot = (totalContributions / 2) * (75 / 100); // 75% av 100 NOK
+  const timeBettingPot = (totalContributions / 2) * (25 / 100); // 25% av 100 NOK
 
   animateValue(babySavingsAmount, parseInt(babySavingsAmount.textContent) || 0, babySavings, 1000);
-  animateValue(bettingPotAmount, parseInt(bettingPotAmount.textContent) || 0, bettingPot, 1000);
+  animateValue(dateBettingPotAmount, parseInt(dateBettingPotAmount.textContent) || 0, dateBettingPot, 1000);
+  animateValue(timeBettingPotAmount, parseInt(timeBettingPotAmount.textContent) || 0, timeBettingPot, 1000);
+
 
   // Oppdater tidslinjen
   items.clear();
@@ -119,8 +139,9 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
         const item = items.get(properties.items[0]);
         if (item.id !== 'due-date') {
           // Sett innhold i modal
-          modalName.textContent = item.name;
-          modalDate.textContent = `Valgt dato: ${item.betDate}`;
+          modalName.textContent = `${item.name} satser 200kr på at bebbi kommer ut av Nora den ${formatDate(item.betDate)} klokka ${item.betTime}`;
+
+          modalDate.textContent =  `Valgt dato og tid: ${formatDate(item.betDate)} kl. ${item.betTime}`;
           if (item.selfieURL) {
             modalImage.src = item.selfieURL;
             modalImage.style.display = 'block';

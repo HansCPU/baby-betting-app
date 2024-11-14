@@ -22,6 +22,8 @@ const confirmationModal = document.getElementById('confirmationModal');
 const modalImage = document.getElementById('modal-image');
 const modalDate = document.getElementById('modal-date');
 const closeBtn = document.getElementsByClassName('close')[0];
+const modalMessage = document.getElementById('modal-message');
+
 
 // Lukk modal når 'X' klikkes
 closeBtn.onclick = function() {
@@ -58,6 +60,7 @@ betForm.addEventListener('submit', (e) => {
 
   const name = betForm['name'].value.trim();
   const date = betForm['date'].value;
+  const time = betForm['time'].value;
   const selfieFile = betForm['selfie'].files[0];
 
   if (!name || !date) {
@@ -86,6 +89,7 @@ betForm.addEventListener('submit', (e) => {
     db.collection('bets').add({
       name: name,
       date: date,
+      time: time,
       selfieURL: selfieURL,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     }).then(() => {
@@ -106,7 +110,9 @@ betForm.addEventListener('submit', (e) => {
       } else {
         modalImage.style.display = 'none';
       }
-      modalDate.textContent = `Valgt dato: ${date}`;
+      // Etter at veddemålet er registrert vellykket
+      modalMessage.textContent = `${name} satser 200kr på at bebbi kommer ut av Nora den ${formatDate(date)} klokka ${time}`;
+
       confirmationModal.style.display = 'block';
     }).catch(error => {
       console.error('Feil ved innsending av veddemål: ', error);
