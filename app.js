@@ -1,4 +1,14 @@
 // app.js
+function formatDate(dateString) {
+  const months = ['januar', 'februar', 'mars', 'april', 'mai', 'juni',
+                  'juli', 'august', 'september', 'oktober', 'november', 'desember'];
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}. ${month} ${year}`;
+}
+
 
 // Initialiser Firebase
 const firebaseConfig = {
