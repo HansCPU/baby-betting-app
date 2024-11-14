@@ -116,8 +116,7 @@ betForm.addEventListener('submit', (e) => {
       confirmationModal.style.display = 'block';
     }).catch(error => {
       console.error('Feil ved innsending av veddemål: ', error);
-      alert('En feil oppstod under innsending. Vennligst prøv igjen.');
-
+      
       // Skjul lasteanimasjon og aktiver send-knappen
       loadingSpinner.style.display = 'none';
       betForm.querySelector('button').disabled = false;
