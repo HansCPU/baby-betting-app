@@ -159,6 +159,79 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
         }
       }
     });
+    // Funksjon for å finne nærmeste dato og tid
+function findClosestGuess(betsData, currentDate) {
+  let closestDateGuess = null;
+  let closestTimeGuess = null;
+  let minDateDifference = Infinity;
+  let minTimeDifference = Infinity;
+
+  betsData.forEach(bet => {
+    const betDate = new Date(`${bet.betDate}T00:00:00`);
+    const betTime = bet.betTime ? new Date(`${bet.betDate}T${bet.betTime}`) : null;
+
+    // Sjekk nærmeste dato
+    const dateDiff = Math.abs(betDate - currentDate);
+    if (dateDiff < minDateDifference) {
+      minDateDifference = dateDiff;
+      closestDateGuess = bet;
+    }
+
+    // Sjekk nærmeste tid hvis det finnes
+    if (betTime) {
+      const timeDiff = Math.abs(betTime - currentDate);
+      if (timeDiff < minTimeDifference) {
+        minTimeDifference = timeDiff;
+        closestTimeGuess = bet;
+      }
+    }
+  });
+
+  return { closestDateGuess, closestTimeGuess };
+}
+
+// Oppdater sanntidslytter
+db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
+  const betsData = [];
+  snapshot.forEach(doc => {
+    const bet = doc.data();
+    betsData.push({
+      id: doc.id,
+      name: bet.name,
+      betDate: bet.date,
+      betTime: bet.time,
+      selfieURL: bet.selfieURL,
+    });
+  });
+
+  const currentDate = new Date();
+  const { closestDateGuess, closestTimeGuess } = findClosestGuess(betsData, currentDate);
+
+  // Oppdater nærmeste gjetning for dato
+  const closestDateElement = document.getElementById('closest-date-guess');
+  if (closestDateGuess) {
+    closestDateElement.innerHTML = `
+      <img src="${closestDateGuess.selfieURL || 'default.jpg'}" alt="${closestDateGuess.name}">
+      <p><strong>${closestDateGuess.name}</strong></p>
+      <p>${formatDate(closestDateGuess.betDate)}</p>
+    `;
+  } else {
+    closestDateElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
+  }
+
+  // Oppdater nærmeste gjetning for tid
+  const closestTimeElement = document.getElementById('closest-time-guess');
+  if (closestTimeGuess) {
+    closestTimeElement.innerHTML = `
+      <img src="${closestTimeGuess.selfieURL || 'default.jpg'}" alt="${closestTimeGuess.name}">
+      <p><strong>${closestTimeGuess.name}</strong></p>
+      <p>${formatDate(closestTimeGuess.betDate)} kl. ${closestTimeGuess.betTime}</p>
+    `;
+  } else {
+    closestTimeElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
+  }
+});
+
 
     // Lukk modal når 'X' klikkes
     closeBtn.onclick = function() {
