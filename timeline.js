@@ -214,36 +214,28 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
 
 // Oppdater nærmeste gjetning for dato
 const closestDateElement = document.getElementById('closest-date-guess');
-if (closestDateGuesses.length > 0) {
-  closestDateElement.innerHTML = closestDateGuesses.slice(0, 3).map(guess => `
+if (closestDateGuess) { // Pass på at du bruker closestDateGuess her, ikke closestDateGuesses
+  closestDateElement.innerHTML = `
     <div class="guess-entry">
-      <img src="${guess.selfieURL || 'default.jpg'}" alt="${guess.name}">
-      <p><strong>${guess.name}</strong></p>
-      <p>${formatDate(guess.betDate)}</p>
+      <img src="${closestDateGuess.selfieURL || 'default.jpg'}" alt="${closestDateGuess.name}">
+      <p><strong>${closestDateGuess.name}</strong></p>
+      <p>${formatDate(closestDateGuess.betDate)}</p>
     </div>
-  `).join('');
-
-  if (closestDateGuesses.length > 3) {
-    closestDateElement.innerHTML += `<p>+${closestDateGuesses.length - 3} more</p>`;
-  }
+  `;
 } else {
   closestDateElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
 }
 
 // Oppdater nærmeste gjetning for tid
 const closestTimeElement = document.getElementById('closest-time-guess');
-if (closestTimeGuesses.length > 0) {
-  closestTimeElement.innerHTML = closestTimeGuesses.slice(0, 3).map(guess => `
+if (closestTimeGuess) { // Pass på at du bruker closestTimeGuess her, ikke closestTimeGuesses
+  closestTimeElement.innerHTML = `
     <div class="guess-entry">
-      <img src="${guess.selfieURL || 'default.jpg'}" alt="${guess.name}">
-      <p><strong>${guess.name}</strong></p>
-      <p>Kl. ${guess.betTime}</p>
+      <img src="${closestTimeGuess.selfieURL || 'default.jpg'}" alt="${closestTimeGuess.name}">
+      <p><strong>${closestTimeGuess.name}</strong></p>
+      <p>Kl. ${closestTimeGuess.betTime}</p>
     </div>
-  `).join('');
-
-  if (closestTimeGuesses.length > 3) {
-    closestTimeElement.innerHTML += `<p>+${closestTimeGuesses.length - 3} more</p>`;
-  }
+  `;
 } else {
   closestTimeElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
 }
