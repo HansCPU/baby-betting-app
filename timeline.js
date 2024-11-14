@@ -212,30 +212,42 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
   const currentDate = new Date();
   const { closestDateGuess, closestTimeGuess } = findClosestGuess(betsData, currentDate);
 
-  // Oppdater nærmeste gjetning for dato
-  const closestDateElement = document.getElementById('closest-date-guess');
-  if (closestDateGuess) {
-    closestDateElement.innerHTML = `
-      <img src="${closestDateGuess.selfieURL || 'default.jpg'}" alt="${closestDateGuess.name}">
-      <p><strong>${closestDateGuess.name}</strong></p>
-      <p>${formatDate(closestDateGuess.betDate)}</p>
-    `;
-  } else {
-    closestDateElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
-  }
+// Oppdater nærmeste gjetning for dato
+const closestDateElement = document.getElementById('closest-date-guess');
+if (closestDateGuesses.length > 0) {
+  closestDateElement.innerHTML = closestDateGuesses.slice(0, 3).map(guess => `
+    <div class="guess-entry">
+      <img src="${guess.selfieURL || 'default.jpg'}" alt="${guess.name}">
+      <p><strong>${guess.name}</strong></p>
+      <p>${formatDate(guess.betDate)}</p>
+    </div>
+  `).join('');
 
-  // Oppdater nærmeste gjetning for tid
-  const closestTimeElement = document.getElementById('closest-time-guess');
-  if (closestTimeGuess) {
-    closestTimeElement.innerHTML = `
-      <img src="${closestTimeGuess.selfieURL || 'default.jpg'}" alt="${closestTimeGuess.name}">
-      <p><strong>${closestTimeGuess.name}</strong></p>
-      <p>${formatDate(closestTimeGuess.betDate)} kl. ${closestTimeGuess.betTime}</p>
-    `;
-  } else {
-    closestTimeElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
+  if (closestDateGuesses.length > 3) {
+    closestDateElement.innerHTML += `<p>+${closestDateGuesses.length - 3} more</p>`;
   }
-});
+} else {
+  closestDateElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
+}
+
+// Oppdater nærmeste gjetning for tid
+const closestTimeElement = document.getElementById('closest-time-guess');
+if (closestTimeGuesses.length > 0) {
+  closestTimeElement.innerHTML = closestTimeGuesses.slice(0, 3).map(guess => `
+    <div class="guess-entry">
+      <img src="${guess.selfieURL || 'default.jpg'}" alt="${guess.name}">
+      <p><strong>${guess.name}</strong></p>
+      <p>Kl. ${guess.betTime}</p>
+    </div>
+  `).join('');
+
+  if (closestTimeGuesses.length > 3) {
+    closestTimeElement.innerHTML += `<p>+${closestTimeGuesses.length - 3} more</p>`;
+  }
+} else {
+  closestTimeElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
+}
+
 
 
     // Lukk modal når 'X' klikkes
