@@ -40,6 +40,7 @@ const options = {
   zoomable: false, // Deaktiver zoom på mobil
 };
 
+// Funksjon for å formatere datoer
 function formatDate(dateString) {
   const months = ['januar', 'februar', 'mars', 'april', 'mai', 'juni',
                   'juli', 'august', 'september', 'oktober', 'november', 'desember'];
@@ -49,7 +50,6 @@ function formatDate(dateString) {
   const year = date.getFullYear();
   return `${day}. ${month} ${year}`;
 }
-
 
 // Initialiser tellere
 let totalContributions = 0;
@@ -69,7 +69,7 @@ function animateValue(id, start, end, duration) {
   window.requestAnimationFrame(step);
 }
 
-// Sanntidslytter
+// Sanntidslytter for å hente data fra Firestore
 db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
   totalContributions = 0;
   const betsData = [];
@@ -87,11 +87,11 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
     const bet = doc.data();
     totalContributions += 200; // Hvert veddemål er 200 NOK
 
-    // Check if bet.time is defined and construct a valid datetime string
+    // Konstruer datetime-streng og sjekk for gyldighet
     const betDateTime = bet.time ? `${bet.date}T${bet.time}` : `${bet.date}`;
     const betDate = new Date(betDateTime);
 
-    // Log a warning if betDate is invalid for debugging
+    // Log en advarsel hvis betDate er ugyldig
     if (isNaN(betDate.getTime())) {
       console.warn('Invalid date format detected:', betDateTime);
     }
@@ -145,7 +145,6 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
         if (item.id !== 'due-date') {
           // Sett innhold i modal
           modalName.textContent = `${item.name} satser 200kr på at bebbi kommer ut av Nora den ${formatDate(item.betDate)} klokka ${item.betTime}`;
-
           modalDate.textContent = `Valgt dato og tid: ${formatDate(item.betDate)} kl. ${item.betTime}`;
           if (item.selfieURL) {
             modalImage.src = item.selfieURL;
@@ -153,94 +152,11 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
           } else {
             modalImage.style.display = 'none';
           }
-
           // Vis modal
           modal.style.display = 'block';
         }
       }
     });
-    // Funksjon for å finne nærmeste dato og tid
-function findClosestGuess(betsData, currentDate) {
-  let closestDateGuess = null;
-  let closestTimeGuess = null;
-  let minDateDifference = Infinity;
-  let minTimeDifference = Infinity;
-
-  const currentMinutesOfDay = currentDate.getHours() * 60 + currentDate.getMinutes();
-
-  betsData.forEach(bet => {
-    const betDate = new Date(`${bet.betDate}T00:00:00`);
-
-    // Sjekk nærmeste dato
-    const dateDiff = Math.abs(betDate - currentDate);
-    if (dateDiff < minDateDifference) {
-      minDateDifference = dateDiff;
-      closestDateGuess = bet;
-    }
-
-    // Sjekk nærmeste klokkeslett uavhengig av dato
-    if (bet.betTime) {
-      const [betHours, betMinutes] = bet.betTime.split(':').map(Number);
-      const betMinutesOfDay = betHours * 60 + betMinutes;
-      const timeDiff = Math.abs(betMinutesOfDay - currentMinutesOfDay);
-
-      if (timeDiff < minTimeDifference) {
-        minTimeDifference = timeDiff;
-        closestTimeGuess = bet;
-      }
-    }
-  });
-
-  return { closestDateGuess, closestTimeGuess };
-}
-
-
-// Oppdater sanntidslytter
-db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
-  const betsData = [];
-  snapshot.forEach(doc => {
-    const bet = doc.data();
-    betsData.push({
-      id: doc.id,
-      name: bet.name,
-      betDate: bet.date,
-      betTime: bet.time,
-      selfieURL: bet.selfieURL,
-    });
-  });
-
-  const currentDate = new Date();
-  const { closestDateGuess, closestTimeGuess } = findClosestGuess(betsData, currentDate);
-
-// Oppdater nærmeste gjetning for dato
-const closestDateElement = document.getElementById('closest-date-guess');
-if (closestDateGuess) { // Pass på at du bruker closestDateGuess her, ikke closestDateGuesses
-  closestDateElement.innerHTML = `
-    <div class="guess-entry">
-      <img src="${closestDateGuess.selfieURL || 'default.jpg'}" alt="${closestDateGuess.name}">
-      <p><strong>${closestDateGuess.name}</strong></p>
-      <p>${formatDate(closestDateGuess.betDate)}</p>
-    </div>
-  `;
-} else {
-  closestDateElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
-}
-
-// Oppdater nærmeste gjetning for tid
-const closestTimeElement = document.getElementById('closest-time-guess');
-if (closestTimeGuess) { // Pass på at du bruker closestTimeGuess her, ikke closestTimeGuesses
-  closestTimeElement.innerHTML = `
-    <div class="guess-entry">
-      <img src="${closestTimeGuess.selfieURL || 'default.jpg'}" alt="${closestTimeGuess.name}">
-      <p><strong>${closestTimeGuess.name}</strong></p>
-      <p>Kl. ${closestTimeGuess.betTime}</p>
-    </div>
-  `;
-} else {
-  closestTimeElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
-}
-
-
 
     // Lukk modal når 'X' klikkes
     closeBtn.onclick = function() {
@@ -255,5 +171,70 @@ if (closestTimeGuess) { // Pass på at du bruker closestTimeGuess her, ikke clos
     };
   } else {
     timeline.setItems(items);
+  }
+
+  // Funksjon for å finne nærmeste dato og tid
+  function findClosestGuess(betsData, currentDate) {
+    let closestDateGuess = null;
+    let closestTimeGuess = null;
+    let minDateDifference = Infinity;
+    let minTimeDifference = Infinity;
+
+    const currentMinutesOfDay = currentDate.getHours() * 60 + currentDate.getMinutes();
+
+    betsData.forEach(bet => {
+      const betDate = new Date(`${bet.betDate}T00:00:00`);
+
+      // Sjekk nærmeste dato
+      const dateDiff = Math.abs(betDate - currentDate);
+      if (dateDiff < minDateDifference) {
+        minDateDifference = dateDiff;
+        closestDateGuess = bet;
+      }
+
+      // Sjekk nærmeste klokkeslett uavhengig av dato
+      if (bet.betTime) {
+        const [betHours, betMinutes] = bet.betTime.split(':').map(Number);
+        const betMinutesOfDay = betHours * 60 + betMinutes;
+        const timeDiff = Math.abs(betMinutesOfDay - currentMinutesOfDay);
+
+        if (timeDiff < minTimeDifference) {
+          minTimeDifference = timeDiff;
+          closestTimeGuess = bet;
+        }
+      }
+    });
+
+    return { closestDateGuess, closestTimeGuess };
+  }
+
+  const { closestDateGuess, closestTimeGuess } = findClosestGuess(betsData, new Date());
+
+  // Oppdater nærmeste gjetning for dato
+  const closestDateElement = document.getElementById('closest-date-guess');
+  if (closestDateGuess) {
+    closestDateElement.innerHTML = `
+      <div class="guess-entry">
+        <img src="${closestDateGuess.selfieURL || 'default.jpg'}" alt="${closestDateGuess.name}">
+        <p><strong>${closestDateGuess.name}</strong></p>
+        <p>${formatDate(closestDateGuess.betDate)}</p>
+      </div>
+    `;
+  } else {
+    closestDateElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
+  }
+
+  // Oppdater nærmeste gjetning for tid
+  const closestTimeElement = document.getElementById('closest-time-guess');
+  if (closestTimeGuess) {
+    closestTimeElement.innerHTML = `
+      <div class="guess-entry">
+        <img src="${closestTimeGuess.selfieURL || 'default.jpg'}" alt="${closestTimeGuess.name}">
+        <p><strong>${closestTimeGuess.name}</strong></p>
+        <p>Kl. ${closestTimeGuess.betTime}</p>
+      </div>
+    `;
+  } else {
+    closestTimeElement.innerHTML = '<p>Ingen gjetninger ennå</p>';
   }
 });
