@@ -290,7 +290,7 @@ button[type="submit"]:hover {
 }
 
 .parents-photo {
-  max-width: 400px; /* Adjust to match the width of the counters */
+  max-width: 320px; /* Adjust to match the width of the counters */
   height: 400px; /* Match the height of the counters */
   display: flex;
   align-items: center;
