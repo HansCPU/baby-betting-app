@@ -290,12 +290,17 @@ button[type="submit"]:hover {
 }
 
 .parents-photo {
-  max-width: 200px; /* Adjust size as needed */
+  max-width: 200px; /* Adjust to match the width of the counters */
+  height: 150px; /* Match the height of the counters */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .parents-photo img {
   width: 100%;
-  max-width: 500px;
+  height: 100%;
+  object-fit: cover;
   border-radius: 10px;
   margin: 1rem auto;
   display: block;
@@ -305,7 +310,8 @@ button[type="submit"]:hover {
 #timeline {
   overflow-x: scroll;
   height: 500px;
-  margin-top: 1rem;
+  margin-top: 1rem 0;
+  padding: 0 1rem;
 }
 
 .vis-item .content {
@@ -352,7 +358,7 @@ button[type="submit"]:hover,
 }
 
 .closest-guess-section {
-  max-width: 600px;
+  max-width: 700px;
   margin: 2rem auto;
   text-align: center;
 }
