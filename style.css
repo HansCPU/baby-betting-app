@@ -309,7 +309,7 @@ button[type="submit"]:hover {
 /* Tidslinjestiler */
 #timeline {
   overflow-x: scroll;
-  height: 500px;
+  
   margin-top: 1rem 0;
   padding: 0 1rem;
 }
