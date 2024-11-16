@@ -35,7 +35,7 @@
 
   <main>
     <div class="top-section">
-      <div class="counters-section">
+      <div class="total-counter">
         <div class="counter-box" id="baby-savings">
           <div class="counter-label">Baby sparepott</div>
           <span id="baby-savings-amount">0</span> NOK
@@ -50,7 +50,6 @@
         </div>
       </div>
 
-      <!-- Foreldrenes bilde -->
       <div class="parents-photo">
         <img src="parents.png" alt="Vordende foreldre" />
       </div>
@@ -58,14 +57,19 @@
 
     <div id="timeline"></div>
 
-    <div class="winners-section">
-      <div id="closest-date-guess" class="winner-box">
+    <div class="closest-guess-section">
+      <div class="guess-box">
         <h3>Nærmeste gjetning for dato</h3>
-        <p>Ingen gjetninger ennå</p>
+        <div id="closest-date-guess" class="guess-card">
+          <p>Ingen gjetninger ennå</p>
+        </div>
       </div>
-      <div id="closest-time-guess" class="winner-box">
+
+      <div class="guess-box">
         <h3>Nærmeste gjetning for tid</h3>
-        <p>Ingen gjetninger ennå</p>
+        <div id="closest-time-guess" class="guess-card">
+          <p>Ingen gjetninger ennå</p>
+        </div>
       </div>
     </div>
 
