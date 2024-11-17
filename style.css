@@ -375,17 +375,28 @@ button[type="submit"]:hover,
 }
 
 .closest-guess-section {
-  max-width: 370px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem; /* Legger til mellomrom mellom boksene */
+  max-width: 800px; /* Juster etter behov */
   margin: 2rem auto;
   text-align: center;
 }
 
+.guess-card h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+}
+
 .guess-card {
+  flex: 1; /* Sørger for at kortene spenner likt */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 1rem;
-  margin-bottom: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -528,4 +539,9 @@ label {
     max-width: 100%; /* Juster for mindre skjermer */
     height: auto;
   }
+}
+.uppercase-bold {
+  font-weight: bold;
+  text-transform: uppercase;
+ 
 }

@@ -77,7 +77,7 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
   // Legg til termindato på tidslinjen
   betsData.push({
     id: 'due-date',
-    content: '<div>Termindato</div>',
+    content: '<div>Termindato: 22.desember</div>',
     start: '2024-12-22',
     type: 'box',
     className: 'due-date',
@@ -215,6 +215,7 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
   if (closestDateGuess) {
     closestDateElement.innerHTML = `
       <div class="guess-entry">
+      <h3>Hvis 👼 blir født <span class="uppercase-bold">NÅ</span> går dato-potten til:</h3>
         <img src="${closestDateGuess.selfieURL || 'default.jpg'}" alt="${closestDateGuess.name}">
         <p><strong>${closestDateGuess.name}</strong></p>
         <p>${formatDate(closestDateGuess.betDate)}</p>
@@ -229,6 +230,7 @@ db.collection('bets').orderBy('timestamp').onSnapshot(snapshot => {
   if (closestTimeGuess) {
     closestTimeElement.innerHTML = `
       <div class="guess-entry">
+      <h3>Hvis 👼 blir født <span class="uppercase-bold">NÅ</span> går tidspunkt-potten til:</h3>
         <img src="${closestTimeGuess.selfieURL || 'default.jpg'}" alt="${closestTimeGuess.name}">
         <p><strong>${closestTimeGuess.name}</strong></p>
         <p>Kl. ${closestTimeGuess.betTime}</p>
