@@ -29,6 +29,12 @@ body {
   text-align: center; /* Center the text */
   margin-bottom: 1rem;
 }
+.counter-description {
+  font-size: 0.85rem;
+  color: #fff;
+  margin-top: 0.5rem;
+  text-align: center;
+}
 
 
 header h1 {
@@ -165,7 +171,7 @@ button[type="submit"]:hover {
   padding: 1rem;
   border: 1px solid #888;
   width: 90%;
-  max-width: 400px;
+  max-width: 500px;
   text-align: center;
   border-radius: 10px;
   position: relative;
@@ -188,9 +194,9 @@ button[type="submit"]:hover {
 .modal-content img {
   display: block;
   margin: 1rem auto;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 400px;
+  height: 500px;
+  border-radius: 5%;
 }
 
 .vipps-message {
@@ -290,8 +296,8 @@ button[type="submit"]:hover {
 }
 
 .parents-photo {
-  max-width: 400px; /* Adjust to match the width of the counters */
-  height: 320px; /* Match the height of the counters */
+  max-width: 600px; /* Adjust to match the width of the counters */
+  height: 350px; /* Match the height of the counters */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -320,10 +326,10 @@ button[type="submit"]:hover {
 }
 
 .vis-item.guess img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 0.5rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 5%;
+ 
 }
 
 .vis-item.guess .text {
@@ -331,7 +337,7 @@ button[type="submit"]:hover {
 }
 
 .vis-item.due-date {
-  background-color: #1e90ff;
+  background-color: #ff7f50;;
   color: white;
   border-radius: 5px;
 }
@@ -358,7 +364,7 @@ button[type="submit"]:hover,
 }
 
 .closest-guess-section {
-  max-width: 700px;
+  max-width: 370px;
   margin: 2rem auto;
   text-align: center;
 }
@@ -373,10 +379,11 @@ button[type="submit"]:hover,
 }
 
 .guess-card img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 10%;
   margin-bottom: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .guess-card p {
@@ -452,4 +459,54 @@ label {
   .modal-content {
     margin-top: 30%;
   }
+}
+
+.dashboard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px; /* Juster bredden etter behov */
+  gap: 1rem;
+}
+
+.counter-box {
+  background-color: #ff7f50;
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  flex: 1; /* Gjør at boksene spanner like mye */
+  text-align: center;
+}
+
+.counter-box h3 {
+  margin-bottom: 0.5rem;
+}
+
+.counter-box span {
+  display: block;
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+
+.counter-description {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.counter-value {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  font-size: 2rem;
+}
+
+.counter-value span {
+  margin-right: 0.25rem; /* Legger til litt mellomrom mellom tallet og "kr" */
 }

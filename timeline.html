@@ -30,7 +30,7 @@
 <body>
 
   <header>
-    <h1>Veddemål tidslinje</h1>
+    <h1>Tidslinje</h1>
   </header>
 
   <main>
@@ -38,33 +38,45 @@
       <div class="parents-photo">
         <img src="parents.png" alt="Vordende foreldre">
       </div>
-      <div class="total-counter">
-        <div class="counter-box" id="baby-savings">
-          <div class="counter-label">Baby sparepott</div>
-          <span id="baby-savings-amount">0</span> NOK
+      <div class="counter-container">
+        <div class="counter-box">
+          <h3>Baby sparepott</h3>
+          <div class="counter-value">
+            <span id="baby-savings-amount">0</span> kr
+          </div>
+          <p class="counter-description">Dette er pengene som går inn på en sparekonto til bebbi</p>
         </div>
-        <div class="counter-box" id="date-betting-pot">
-          <div class="counter-label">Dato bet pott</div>
-          <span id="date-betting-pot-amount">0</span> NOK
+        <div class="counter-box">
+          <h3>Dato pott</h3>
+          <div class="counter-value">
+            <span id="date-betting-pot-amount">0</span> kr
+          </div>
+          <p class="counter-description">Dette er summen som går til den som gjetter nærmeste dato</p>
         </div>
-        <div class="counter-box" id="time-betting-pot">
-          <div class="counter-label">Tidspunkt bet pott</div>
-          <span id="time-betting-pot-amount">0</span> NOK
+        <div class="counter-box">
+          <h3>Tidspunkt pott</h3>
+          <div class="counter-value">
+            <span id="time-betting-pot-amount">0</span> kr
+          </div>
+          <p class="counter-description">Dette er summen som går til den som gjetter nærmeste tid på dagen</p>
         </div>
       </div>
     </div>
+</main>
+
+
 
 
       
 
       <div id="timeline"></div>
       <div class="closest-guess-section">
-        <h3>Nærmeste gjetning for dato</h3>
+        <h3>Hvis 👼 blir født nå går dato potten til:</h3>
         <div id="closest-date-guess" class="guess-card">
           <p>Ingen gjetninger ennå</p>
         </div>
       
-        <h3>Nærmeste gjetning for tid</h3>
+        <h3>Hvis 👼 blir født nå går tidspunkt potten til:</h3>
         <div id="closest-time-guess" class="guess-card">
           <p>Ingen gjetninger ennå</p>
         </div>
