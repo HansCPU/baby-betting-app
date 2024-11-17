@@ -195,9 +195,11 @@ button[type="submit"]:hover {
 .modal-content img {
   display: block;
   margin: 1rem auto;
-  width: 400px;
-  height: 500px;
+  width: 100%;
+  max-width: 400px; /* Maks bredde tilpasset modalen */
+  height: auto; /* Holder aspektforholdet */
   border-radius: 10px;
+  object-fit: cover; /* Juster dette til 'contain' hvis du vil at hele bildet skal være synlig */
 }
 
 .vipps-message {
@@ -315,20 +317,28 @@ button[type="submit"]:hover {
 
 /* Tidslinjestiler */
 #timeline {
-  overflow-x: scroll;
-  
-  margin-top: 1rem 0;
-  padding: 0 1rem;
+  overflow-x: auto;
+  overflow-y: hidden; /* Hold horisontal skrolling */
+  padding: 1rem; /* Mer polstring */
+  margin: 1rem 0; /* Ekstra luft rundt tidslinjen */
+  border: 1px solid #ddd; /* Diskré ramme */
+  border-radius: 10px;
+  background-color: #fff; /* Gjør tidslinjen mer synlig */
 }
 
 .vis-item .content {
-  display: flex;
-  align-items: center;
+  background-color: #ff7f50; /* Markant farge */
+  color: #fff; /* Kontrastfarge */
+  border-radius: 8px;
+  padding: 0.5rem;
+  transition: transform 0.2s ease; /* Legg til animasjon */
 }
 
 .vis-item.guess img {
-  width: 60px;
+  max-width: 60px;
   height: 60px;
+ 
+;
   border-radius: 5%;
  
 }
@@ -381,10 +391,11 @@ button[type="submit"]:hover,
 
 .guess-card img {
   width: 100px;
-  height: 100px;
+  height: 150px;
   border-radius: 10%;
   margin-bottom: 0.5rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
 }
 
 .guess-card p {
@@ -510,4 +521,11 @@ label {
 
 .counter-value span {
   margin-right: 0.25rem; /* Legger til litt mellomrom mellom tallet og "kr" */
+}
+
+@media (max-width: 600px) {
+  .modal-content img {
+    max-width: 100%; /* Juster for mindre skjermer */
+    height: auto;
+  }
 }
